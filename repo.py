@@ -1,6 +1,7 @@
 import configparser
 import os
 
+defaultConfigName = "repo_default_config"
 
 class GitRepository(object):
     """A git repository"""
@@ -96,10 +97,12 @@ def repo_create(path):
 
 def repo_default_config():
     ret = configparser.ConfigParser()
+    defaultConfig = configparser.ConfigParser()
 
-    ret.add_section("core")
-    ret.set("core", "repositoryformatversion", "0")
-    ret.set("core", "filemode", "false")
-    ret.set("core", "bare", "false")
+    defaultConfig.read(f'./{defaultConfigName}')
+    for section in defaultConfig.sections():
+        ret.add_section(section)
+        for (key, val) in defaultConfig.items(section):
+            ret.set(section, key, val)
 
     return ret

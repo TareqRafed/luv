@@ -1,4 +1,3 @@
-import argparse
 import collections
 import configparser
 import hashlib
